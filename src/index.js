@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import io from "socket.io-client";
 
 let app = new PIXI.Application({
   width: window.innerWidth,
