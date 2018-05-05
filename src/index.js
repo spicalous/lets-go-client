@@ -13,3 +13,6 @@ function resize() {
 window.addEventListener("resize", resize, false);
 
 document.body.appendChild(app.view);
+
+const socketIOURL = `${window.location.hostname}:3000`
+const socket = io(socketIOURL);
