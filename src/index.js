@@ -2,6 +2,8 @@ import * as PIXI from "pixi.js";
 import io from "socket.io-client";
 import throttle from "lodash/throttle";
 
+const MAX_FPS = 1000 / 60;
+
 const socket = io(`${window.location.hostname}:3000`);
 const app = new PIXI.Application({
   width: window.innerWidth,
@@ -33,7 +35,7 @@ function emitPointerLocation(event) {
   socket.emit('pointer location', { x, y });
 }
 
-const throttledEmitPointerLocation = throttle(emitPointerLocation, 100, { trailing: true });
+const throttledEmitPointerLocation = throttle(emitPointerLocation, MAX_FPS);
 
 window.addEventListener("resize", resize, false);
 window.addEventListener("pointermove", throttledEmitPointerLocation, false);
