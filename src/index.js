@@ -39,6 +39,11 @@ function emitPointerLocation(event) {
   socket.emit('pointer location', [{ x, y }]);
 }
 
+function emitPointerLeave(event) {
+  event.preventDefault();
+  socket.emit('pointer location', []);
+}
+
 function emitTouchLocation(event) {
   const locations = [];
 
@@ -56,6 +61,9 @@ const throttledEmitTouchLocation = throttle(emitTouchLocation, MAX_FPS);
 
 app.view.addEventListener("resize", resize, false);
 app.view.addEventListener("pointermove", throttledEmitPointerLocation, false);
+app.view.addEventListener("pointerleave", emitPointerLeave, false);
+app.view.addEventListener("touchstart", emitTouchLocation, false);
 app.view.addEventListener("touchmove", throttledEmitTouchLocation, false);
+app.view.addEventListener("touchend", emitTouchLocation, false);
 
 document.body.appendChild(app.view);
