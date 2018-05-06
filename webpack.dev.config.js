@@ -9,8 +9,5 @@ module.exports = merge(webpackConfig, {
   devServer: {
     host: '0.0.0.0',
     contentBase: './dist'
-  },
-  plugins: [
-    new CleanWebpackPlugin(['dist'])
-  ]
+  }
 });

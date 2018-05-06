@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
+    new CleanWebpackPlugin(['dist']),
     new ExtractTextPlugin("lets-go.css"),
     new HtmlWebpackPlugin({
       title: 'Lets Go'
