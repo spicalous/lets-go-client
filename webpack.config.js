@@ -1,18 +1,30 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: ['./src/index.js', './src/index.css'],
+  entry: {
+    home: ['./src/index.js', './src/index.scss'],
+    game: ['./src/game/index.js', './src/game/index.scss']
+  },
   output: {
-    filename: 'lets-go.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new ExtractTextPlugin("lets-go.css"),
+    new ExtractTextPlugin("[name].css"),
     new HtmlWebpackPlugin({
-      title: 'Lets Go'
+      filename: 'index.html',
+      template: 'src/index.html',
+      title: 'Lets Go - Home',
+      chunks: ['home']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'game/index.html',
+      title: 'Lets Go - Game',
+      chunks: ['game']
     })
   ],
   module: {
@@ -28,10 +40,16 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
+          use: [
+            {
+              loader: "css-loader"
+            },
+            {
+              loader: "sass-loader"
+            }
+          ]
         })
       }
     ]
