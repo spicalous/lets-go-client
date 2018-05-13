@@ -1,0 +1,12 @@
+button {
+  outline: 0;
+  cursor: pointer;
+  color: $white;
+  background-color: transparent;
+  padding: 12px;
+
+  &:active {
+    color: black;
+    background-color: $white;
+  }
+}
