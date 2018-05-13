@@ -1,1 +1,27 @@
 @import "./../styles/reset";
+@import "./../styles/colours";
+@import "./../styles/input";
+
+.application {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: $palette-blue;
+
+  .input-container {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+
+    label {
+      flex: 1;
+    }
+  }
+
+  .room-list-container {
+    flex: 1;
+  }
+}
+
+
