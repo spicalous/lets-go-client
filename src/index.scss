@@ -10,34 +10,33 @@
   height: 100%;
   background-color: $palette-blue;
 
-  .input-container {
+  .input-container,
+  .action-container {
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
 
-    label {
-      flex: 1;
+  .action-container {
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    button,
+    div {
+      color: $white;
+      margin: 12px;
     }
   }
 
   .room-list-container {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1;
 
-    .join-game-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 12px;
-      color: $white;
-
-      div {
-        margin: 12px;
-      }
-    }
+    outline: $white solid 1px;
+    outline-offset: -12px;
   }
 }
 
