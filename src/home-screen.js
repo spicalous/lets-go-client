@@ -19,8 +19,6 @@ class HomeScreen {
 
   _onGameList(gameList) {
 
-    console.log(gameList);
-
     gameList.forEach((game) => {
       let roomListItem = document.createElement("div");
       roomListItem.innerHTML = game.id;
@@ -29,7 +27,7 @@ class HomeScreen {
   }
 
   _onGameCreated(game) {
-    console.log(game);
+    window.location = `${window.location}game?id=${game.id}`;
   }
 }
 
