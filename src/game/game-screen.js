@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import throttle from 'lodash/throttle';
+import { extract } from '../util/query-param';
 
 const MAX_FPS = 1000 / 60;
 
@@ -7,6 +8,7 @@ class GameScreen {
 
   constructor(socket) {
     this._socket = socket;
+    this._roomId = extract('id', window.location.search);
     this._throttledEmitPointerLocation = throttle(this._emitPointerLocation.bind(this), MAX_FPS);
     this._throttledEmitTouchLocation = throttle(this._emitTouchLocation.bind(this), MAX_FPS);
 
