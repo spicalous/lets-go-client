@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    home: ['./src/index.js', './src/index.scss'],
-    game: ['./src/game/index.js', './src/game/index.scss']
+    index: ['./src/index/index.js', './src/index/index.scss'],
+    game: ['./src/game/game.js', './src/game/game.scss']
   },
   output: {
     filename: '[name].js',
@@ -17,9 +17,9 @@ module.exports = {
     new ExtractTextPlugin("[name].css"),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'src/index.html',
-      title: 'Lets Go - Home',
-      chunks: ['home']
+      template: 'src/index/index.html',
+      title: 'Lets Go - Index',
+      chunks: ['index']
     }),
     new HtmlWebpackPlugin({
       filename: 'game/index.html',

@@ -1,5 +1,5 @@
 
-class HomeScreen {
+class IndexScreen {
 
   constructor(socket) {
     this._socket = socket;
@@ -33,4 +33,4 @@ class HomeScreen {
   }
 }
 
-export default HomeScreen;
+export default IndexScreen;
