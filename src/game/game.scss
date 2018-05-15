@@ -1,1 +1,10 @@
 @import "./../../styles/reset";
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+body {
+  overflow: hidden;
+}
