@@ -1,5 +1,5 @@
-@import "./../../styles/reset";
 @import "./../../styles/colours";
+@import "./../../styles/reset";
 @import "./../../styles/components/button";
 @import "./../../styles/components/input";
 
@@ -8,7 +8,6 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: $palette-blue;
 
   .input-container,
   .action-container {
@@ -23,8 +22,11 @@
 
     button,
     div {
-      color: $white;
       margin: 12px;
+    }
+
+    div {
+      color: $white;
     }
   }
 

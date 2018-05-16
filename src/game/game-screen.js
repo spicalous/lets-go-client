@@ -12,9 +12,15 @@ class GameScreen {
     this._throttledEmitPointerLocation = throttle(this._emitPointerLocation.bind(this), MAX_FPS);
     this._throttledEmitTouchLocation = throttle(this._emitTouchLocation.bind(this), MAX_FPS);
 
-    this._initPIXI();
-    this._listenToDOMEvents();
-    socket.on('pointer location', this._plotLocations.bind(this));
+    if (this._validRoomId(this._roomId)) {
+      this._initPIXI();
+    } else {
+      throw new Error('INVALID ROOM ID');
+    }
+  }
+
+  _validRoomId(id) {
+    return typeof id === 'string' && id.length === 36;
   }
 
   _initPIXI() {
@@ -26,16 +32,16 @@ class GameScreen {
     this._graphics = new PIXI.Graphics();
     this._app.stage.addChild(this._graphics);
 
-    document.body.appendChild(this._app.view);
-  }
-
-  _listenToDOMEvents() {
-    window.addEventListener('resize', this._onResize.bind(this), false);
     this._app.view.addEventListener('pointermove', this._throttledEmitPointerLocation, false);
     this._app.view.addEventListener('pointerleave', this._emitPointerLeave.bind(this), false);
     this._app.view.addEventListener('touchstart', this._emitTouchLocation.bind(this), false);
     this._app.view.addEventListener('touchmove', this._throttledEmitTouchLocation, false);
     this._app.view.addEventListener('touchend', this._emitTouchLocation.bind(this), false);
+    window.addEventListener('resize', this._onResize.bind(this), false);
+
+    document.body.appendChild(this._app.view);
+
+    this._socket.on('pointer location', this._plotLocations.bind(this));
   }
 
   _plotLocations(locationsById) {
