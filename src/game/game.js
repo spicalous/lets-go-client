@@ -1,29 +1,29 @@
 import io from 'socket.io-client';
 import GameScreen from './game-screen';
+import ErrorScreen from './error-screen';
+import { extract } from '../util/query-param';
 
 const socket = io(`${window.location.hostname}:3000/game`);
 
+function validGameId(id) {
+  return typeof id === 'string' && id.length === 36;
+}
+
 function onDOMContentLoaded() {
+  const gameId = extract('id', window.location.search);
 
-  try {
-    new GameScreen(socket);
-  } catch (e) {
-    const body = document.querySelector('body');
-    const errorContainer = document.createElement('div');
-    const errorMessage = document.createElement('div');
-    const homeBtn = document.createElement('button');
+  if (validGameId(gameId)) {
 
-    errorContainer.className = 'error-container';
-    errorMessage.className = 'error-message';
-    errorMessage.innerHTML = e.message;
-    homeBtn.setAttribute('type', 'button');
-    homeBtn.addEventListener('click', () => window.location = `${window.location.origin}`);
-    homeBtn.innerHTML = 'BACK';
+    let gameScreen = new GameScreen(socket);
 
-    errorContainer.append(errorMessage);
-    errorContainer.append(homeBtn);
+    gameScreen.onError((message) => {
+      new ErrorScreen(message);
+    });
 
-    body.append(errorContainer);
+    gameScreen.join(gameId);
+
+  } else {
+    new ErrorScreen('INVALID GAME ID');
   }
 
   document.removeEventListener('DOMContentLoaded', onDOMContentLoaded);

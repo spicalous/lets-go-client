@@ -16,19 +16,20 @@ class IndexScreen {
     this._socket.emit('create game');
   }
 
-  _onGameList(gameList) {
+  _onGameList(gameIds) {
 
-    gameList.forEach((game) => {
+
+    gameIds.forEach((gameId) => {
       let roomListItem = document.createElement('div');
-      roomListItem.innerHTML = game.id;
+      roomListItem.innerHTML = gameId;
       roomListItem.className = 'room-item';
-      roomListItem.addEventListener('click', this._enterGame.bind(this, game));
+      roomListItem.addEventListener('click', this._enterGame.bind(this, gameId));
       this._roomContainer.append(roomListItem);
     });
   }
 
-  _enterGame(game) {
-    window.location = `${window.location}game?id=${game.id}`;
+  _enterGame(gameId) {
+    window.location = `${window.location}game?id=${gameId}`;
   }
 }
 
