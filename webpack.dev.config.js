@@ -5,9 +5,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpackConfig = require('./webpack.config.js');
 
 module.exports = merge(webpackConfig, {
-  devtool: 'eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     host: '0.0.0.0',
-    contentBase: './dist'
+    contentBase: './dist',
+    proxy: {
+      "/api": "http://localhost:3000"
+    }
   }
 });

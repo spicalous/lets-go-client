@@ -31,11 +31,13 @@
     "mocha": "5.1.1",
     "node-sass": "4.9.0",
     "pixi.js": "4.7.3",
+    "promise-polyfill": "7.1.2",
     "sass-loader": "7.0.1",
     "socket.io": "2.1.0",
     "style-loader": "0.19.1",
     "webpack": "3.10.0",
     "webpack-dev-server": "2.11.0",
-    "webpack-merge": "4.1.1"
+    "webpack-merge": "4.1.1",
+    "whatwg-fetch": "2.0.4"
   }
 }

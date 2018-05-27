@@ -4,26 +4,26 @@ class IndexScreen {
     this._socket = socket;
     this._roomContainer = document.querySelector('.room-container');
     this._createButton = document.querySelector('#btn-id-create');
-
-    this._socket.on('game list', this._onGameList.bind(this));
-    this._socket.on('game created', this._enterGame.bind(this));
     this._createButton.addEventListener('click', this._createGame.bind(this));
 
-    this._socket.emit('get games list');
+    fetch('api/games')
+      .then((response) => response.json())
+      .then(this._handleGamesList.bind(this));
   }
 
   _createGame() {
-    this._socket.emit('create game');
+    fetch('api/games/create', { method: 'POST' })
+      .then((response) => response.json())
+      .then((game) => this._enterGame(game.id));
   }
 
-  _onGameList(gameIds) {
-
+  _handleGamesList(gameIds) {
 
     gameIds.forEach((gameId) => {
       let roomListItem = document.createElement('div');
       roomListItem.innerHTML = gameId;
       roomListItem.className = 'room-item';
-      roomListItem.addEventListener('click', this._enterGame.bind(this, gameId));
+      roomListItem.addEventListener('click', this._enterGame.bind(null, gameId));
       this._roomContainer.append(roomListItem);
     });
   }

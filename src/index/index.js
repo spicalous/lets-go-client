@@ -1,3 +1,4 @@
+import 'promise-polyfill/src/polyfill';
 import io from 'socket.io-client';
 import IndexScreen from './index-screen';
 
