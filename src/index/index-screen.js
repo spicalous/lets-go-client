@@ -1,7 +1,6 @@
 class IndexScreen {
 
-  constructor(socket) {
-    this._socket = socket;
+  constructor() {
     this._roomContainer = document.querySelector('.room-container');
     this._createButton = document.querySelector('#btn-id-create');
     this._createButton.addEventListener('click', this._createGame.bind(this));
