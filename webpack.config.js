@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     index: ['whatwg-fetch', './src/index/index.js', './src/index/index.scss'],
-    game: ['./src/game/game.js', './src/game/game.scss']
+    game: ['whatwg-fetch', './src/game/game.js', './src/game/game.scss']
   },
   output: {
     filename: '[name].js',
