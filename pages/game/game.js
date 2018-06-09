@@ -2,7 +2,7 @@ import 'promise-polyfill/src/polyfill';
 import io from 'socket.io-client';
 import GameScreen from './game-screen';
 import ErrorScreen from './error-screen';
-import { extract } from '../util/query-param';
+import { extract } from '../../src/util/query-param';
 
 const socket = io(`${window.location.hostname}:3000/game`);
 
