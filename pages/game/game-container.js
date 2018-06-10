@@ -14,7 +14,7 @@ class GameContainer extends Container {
     super._onDOMContentLoaded();
 
     if (Game.isValid(this._gameId)) {
-      
+
       this._socket.emit('join game', this._gameId, (error) => {
 
         if (error) {

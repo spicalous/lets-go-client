@@ -1,6 +1,7 @@
 @import "./../../styles/colours";
 @import "./../../styles/reset";
 @import "./../../styles/components/button";
+@import "./../../styles/components/container";
 
 ::-webkit-scrollbar {
     width: 0px;
@@ -9,17 +10,4 @@
 
 body {
   overflow: hidden;
-}
-
-.error-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  .error-message {
-    color: $white;
-    margin-bottom: 12px;
-  }
 }

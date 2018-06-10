@@ -9,7 +9,7 @@ class Container {
   }
 
   /**
-   * Sublcasses can override this hook to operate on DOM.
+   * Subclasses can override this hook to operate on DOM.
    * Don't forget to call super._onDOMContentLoaded to remove the event listener!
    * @protected
    */
