@@ -1,6 +1,9 @@
-class IndexScreen {
+import Container from "../../src/ui/container";
 
-  constructor() {
+class IndexContainer extends  Container {
+
+  _onDOMContentLoaded() {
+    super._onDOMContentLoaded();
     this._roomContainer = document.querySelector('.room-container');
     this._createButton = document.querySelector('#btn-id-create');
     this._createButton.addEventListener('click', this._createGame.bind(this));
@@ -32,4 +35,4 @@ class IndexScreen {
   }
 }
 
-export default IndexScreen;
+export default IndexContainer;

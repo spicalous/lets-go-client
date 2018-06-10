@@ -1,28 +1,35 @@
-import * as PIXI from 'pixi.js';
-import throttle from 'lodash/throttle';
+import * as PIXI from "pixi.js";
+import throttle from "lodash/throttle";
+import Container from "../../src/ui/container";
+import Game from "../../src/model/game";
 
 const MAX_FPS = 1000 / 60;
 
-class GameScreen {
+class GameContainer extends Container {
 
-  constructor(socket) {
+  constructor(socket, gameId) {
+    super();
     this._socket = socket;
+    this._gameId = gameId;
   }
 
-  onError(errorCallback) {
-    this._errorCallback = errorCallback;
-  }
+  _onDOMContentLoaded() {
+    super._onDOMContentLoaded();
 
-  join(id) {
-    this._socket.emit('join game', id, (error) => {
+    if (Game.isValid(this._gameId)) {
+      
+      this._socket.emit('join game', this._gameId, (error) => {
 
-      if (error) {
-        this._errorCallback(error);
-      } else {
-        this._initPIXI();
-        this._attachListeners();
-      }
-    });
+        if (error) {
+          this._displayError(error);
+        } else {
+          this._initPIXI();
+          this._attachListeners();
+        }
+      });
+    } else {
+      this._displayError("INVALID GAME ID");
+    }
   }
 
   _initPIXI() {
@@ -95,4 +102,4 @@ class GameScreen {
 
 }
 
-export default GameScreen;
+export default GameContainer;

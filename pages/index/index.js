@@ -1,9 +1,4 @@
 import 'promise-polyfill/src/polyfill';
-import IndexScreen from './index-screen';
+import IndexContainer from './index-container';
 
-function onDOMContentLoaded() {
-  new IndexScreen();
-  document.removeEventListener('DOMContentLoaded', onDOMContentLoaded);
-}
-
-document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
+new IndexContainer();
