@@ -10,7 +10,7 @@ class Game {
 
   /**
    * id's are generated on the backend but they should always be 36 characters long
-   * @param {*} id 
+   * @param {*} id
    */
   static isValid(id) {
     return typeof id === 'string' && id.length === 36;

@@ -26,7 +26,7 @@ class Container {
     messageEl.className = 'error-message';
     messageEl.innerHTML = message;
 
-    const homeBtnEl = document.createElement('button');  
+    const homeBtnEl = document.createElement('button');
     homeBtnEl.innerHTML = 'BACK';
     homeBtnEl.setAttribute('type', 'button');
     homeBtnEl.addEventListener('click', () => window.location = `${window.location.origin}`);
