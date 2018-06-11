@@ -1,7 +1,9 @@
-class MiniGame {
+import Container from './container';
 
-  constructor(container, socket) {
-    this._container = container;
+class MiniGame extends Container {
+
+  constructor(socket) {
+    super();
     this._socket = socket;
     this._onResize = this._onResize.bind(this);
   }
@@ -17,8 +19,7 @@ class MiniGame {
   destroy() {
     window.removeEventListener('resize', this._onResize, false);
     delete this._socket;
-    this._container.innerHTML = '';
-    delete this._container;
+    super.destroy();
   }
 }
 

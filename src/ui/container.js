@@ -3,19 +3,8 @@
  */
 class Container {
 
-  constructor(container) {
+  initDOM(container) {
     this._container = container;
-    this._onDOMContentLoaded = this._onDOMContentLoaded.bind(this);
-    document.addEventListener('DOMContentLoaded', this._onDOMContentLoaded, false);
-  }
-
-  /**
-   * Subclasses can override this hook to operate on DOM.
-   * Don't forget to call super._onDOMContentLoaded to remove the event listener!
-   * @protected
-   */
-  _onDOMContentLoaded() {
-    document.removeEventListener('DOMContentLoaded', this._onDOMContentLoaded, false);
   }
 
   _displayError(message) {
@@ -38,9 +27,10 @@ class Container {
   }
 
   destroy() {
-    document.removeEventListener('DOMContentLoaded', this._onDOMContentLoaded, false);
-    this._container.innerHTML = '';
-    delete this._container;
+    if (this._container) {
+      this._container.innerHTML = '';
+      delete this._container;
+    }
   }
 }
 

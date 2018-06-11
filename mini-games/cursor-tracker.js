@@ -6,15 +6,15 @@ const MAX_FPS = 1000 / 60;
 
 class CursorTracker extends MiniGame {
 
-  constructor(container, socket) {
-    super(container, socket);
+  constructor(socket) {
+    super(socket);
   }
 
   /**
    * @override
    */
-  _initUI() {
-    super._initUI();
+  initDOM(container) {
+    super.initDOM(container);
     this._app = new PIXI.Application({
       width: window.innerWidth,
       height: window.innerHeight
@@ -23,14 +23,14 @@ class CursorTracker extends MiniGame {
     this._graphics = new PIXI.Graphics();
     this._app.stage.addChild(this._graphics);
 
-    dcontainer.appendChild(this._app.view);
+    this._container.appendChild(this._app.view);
   }
 
   /**
    * @override
    */
-  _initListeners() {
-    super._initListeners();
+  initListeners() {
+    super.initListeners();
     this._throttledEmitPointerLocation = throttle(this._emitPointerLocation.bind(this), MAX_FPS);
     this._throttledEmitTouchLocation = throttle(this._emitTouchLocation.bind(this), MAX_FPS);
 
