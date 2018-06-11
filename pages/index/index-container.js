@@ -30,7 +30,7 @@ class IndexContainer extends Container {
       let roomListItem = document.createElement('div');
       roomListItem.innerHTML = gameId;
       roomListItem.className = 'room-item';
-      roomListItem.addEventListener('click', this._enterGame, false);
+      roomListItem.addEventListener('click', this._enterGame.bind(this, gameId, false));
       this._roomContainer.append(roomListItem);
     });
   }

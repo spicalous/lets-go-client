@@ -1,4 +1,5 @@
 import Container from "../../src/ui/container";
+import LobbyContainer from "./lobby-container";
 
 class GameContainer extends Container {
 
@@ -14,7 +15,9 @@ class GameContainer extends Container {
       if (data.error) {
         this.displayError(data.error);
       } else {
-        console.log("TODO!");
+        const lobbyContainer = new LobbyContainer();
+        lobbyContainer.initDOM(this._container);
+        lobbyContainer.startListening(this._socket);
       }
     });
   }
