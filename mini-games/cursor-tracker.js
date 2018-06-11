@@ -1,22 +1,20 @@
 import * as PIXI from "pixi.js";
 import throttle from "lodash/throttle";
-import MiniGame from "../src/model/mini-game";
+import MiniGame from "../src/ui/mini-game";
 
 const MAX_FPS = 1000 / 60;
 
 class CursorTracker extends MiniGame {
 
-  constructor(socket) {
-    super();
-    this._socket = socket;
+  constructor(container, socket) {
+    super(container, socket);
   }
 
-  start() {
-    this._initPIXI();
-    this._attachListeners();
-  }
-
-  _initPIXI() {
+  /**
+   * @override
+   */
+  _initUI() {
+    super._initUI();
     this._app = new PIXI.Application({
       width: window.innerWidth,
       height: window.innerHeight
@@ -25,10 +23,14 @@ class CursorTracker extends MiniGame {
     this._graphics = new PIXI.Graphics();
     this._app.stage.addChild(this._graphics);
 
-    document.body.appendChild(this._app.view);
+    dcontainer.appendChild(this._app.view);
   }
 
-  _attachListeners() {
+  /**
+   * @override
+   */
+  _initListeners() {
+    super._initListeners();
     this._throttledEmitPointerLocation = throttle(this._emitPointerLocation.bind(this), MAX_FPS);
     this._throttledEmitTouchLocation = throttle(this._emitTouchLocation.bind(this), MAX_FPS);
 
@@ -37,7 +39,6 @@ class CursorTracker extends MiniGame {
     this._app.view.addEventListener('touchstart', this._emitTouchLocation.bind(this), false);
     this._app.view.addEventListener('touchmove', this._throttledEmitTouchLocation, false);
     this._app.view.addEventListener('touchend', this._emitTouchLocation.bind(this), false);
-    window.addEventListener('resize', this._onResize.bind(this), false);
 
     this._socket.on('pointer location', this._plotLocations.bind(this));
   }
@@ -58,6 +59,7 @@ class CursorTracker extends MiniGame {
   }
 
   _onResize() {
+    super._onResize();
     this._app.renderer.resize(window.innerWidth, window.innerHeight);
   }
 

@@ -3,9 +3,10 @@
  */
 class Container {
 
-  constructor() {
-    this._boundOnDOMContentLoadedFn = this._onDOMContentLoaded.bind(this);
-    document.addEventListener('DOMContentLoaded', this._boundOnDOMContentLoadedFn);
+  constructor(container) {
+    this._container = container;
+    this._onDOMContentLoaded = this._onDOMContentLoaded.bind(this);
+    document.addEventListener('DOMContentLoaded', this._onDOMContentLoaded, false);
   }
 
   /**
@@ -14,13 +15,12 @@ class Container {
    * @protected
    */
   _onDOMContentLoaded() {
-    document.removeEventListener('DOMContentLoaded', this._boundOnDOMContentLoadedFn);
-    delete this._boundOnDOMContentLoadedFn;
+    document.removeEventListener('DOMContentLoaded', this._onDOMContentLoaded, false);
   }
 
   _displayError(message) {
-    const containerEl = document.createElement('div');
-    containerEl.className = 'error-container';
+    const errorContainerEl = document.createElement('div');
+    errorContainerEl.className = 'error-container';
 
     const messageEl = document.createElement('div');
     messageEl.className = 'error-message';
@@ -31,10 +31,16 @@ class Container {
     homeBtnEl.setAttribute('type', 'button');
     homeBtnEl.addEventListener('click', () => window.location = `${window.location.origin}`);
 
-    containerEl.append(messageEl);
-    containerEl.append(homeBtnEl);
+    errorContainerEl.append(messageEl);
+    errorContainerEl.append(homeBtnEl);
 
-    document.body.append(containerEl);
+    this._container.append(errorContainerEl);
+  }
+
+  destroy() {
+    document.removeEventListener('DOMContentLoaded', this._onDOMContentLoaded, false);
+    this._container.innerHTML = '';
+    delete this._container;
   }
 }
 

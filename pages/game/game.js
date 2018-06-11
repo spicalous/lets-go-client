@@ -6,4 +6,4 @@ import GameContainer from './game-container';
 const socket = io(`${window.location.hostname}:3000/game`);
 const gameId = extract('id', window.location.search);
 
-new GameContainer(socket, gameId);
+new GameContainer(document.body, socket, gameId);

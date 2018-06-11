@@ -1,11 +1,9 @@
 import Container from "../../src/ui/container";
-import Game from "../../src/model/game";
-import CursorTracker from "../../mini-games/cursor-tracker";
 
 class GameContainer extends Container {
 
-  constructor(socket, gameId) {
-    super();
+  constructor(container, socket, gameId) {
+    super(container);
     this._socket = socket;
     this._gameId = gameId;
   }
@@ -13,20 +11,14 @@ class GameContainer extends Container {
   _onDOMContentLoaded() {
     super._onDOMContentLoaded();
 
-    if (Game.isValid(this._gameId)) {
+    this._socket.emit('join game', this._gameId, (data) => {
 
-      this._socket.emit('join game', this._gameId, (error) => {
-
-        if (error) {
-          this._displayError(error);
-        } else {
-          let miniGame = new CursorTracker(this._socket);
-          miniGame.start();
-        }
-      });
-    } else {
-      this._displayError("INVALID GAME ID");
-    }
+      if (data.error) {
+        this._displayError(data.error);
+      } else {
+        console.log('implement game lobby', data);
+      }
+    });
   }
 
 }

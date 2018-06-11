@@ -2,11 +2,16 @@ import Container from "../../src/ui/container";
 
 class IndexContainer extends  Container {
 
+  constructor(container) {
+    super(container);
+    this._createGame = this._createGame.bind(this);
+  }
+
   _onDOMContentLoaded() {
     super._onDOMContentLoaded();
-    this._roomContainer = document.querySelector('.room-container');
-    this._createButton = document.querySelector('#btn-id-create');
-    this._createButton.addEventListener('click', this._createGame.bind(this));
+    this._roomContainer = this._container.querySelector('.room-container');
+    this._createButton = this._container.querySelector('#btn-id-create');
+    this._createButton.addEventListener('click', this._createGame, false);
 
     fetch('api/games')
       .then((response) => response.json())
@@ -25,7 +30,7 @@ class IndexContainer extends  Container {
       let roomListItem = document.createElement('div');
       roomListItem.innerHTML = gameId;
       roomListItem.className = 'room-item';
-      roomListItem.addEventListener('click', this._enterGame.bind(null, gameId));
+      roomListItem.addEventListener('click', this._enterGame, false);
       this._roomContainer.append(roomListItem);
     });
   }
@@ -33,6 +38,7 @@ class IndexContainer extends  Container {
   _enterGame(gameId) {
     window.location = `${window.location}game?id=${gameId}`;
   }
+
 }
 
 export default IndexContainer;
