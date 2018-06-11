@@ -1,13 +1,14 @@
-/**
- * UI container for the index and game page
- */
 class Container {
 
   initDOM(container) {
     this._container = container;
   }
 
-  _displayError(message) {
+  startListening(socket) {
+    this._socket = socket;
+  }    
+
+  displayError(message) {
     const errorContainerEl = document.createElement('div');
     errorContainerEl.className = 'error-container';
 
@@ -27,6 +28,10 @@ class Container {
   }
 
   destroy() {
+    if (this._socket) {
+      this._socket.off();
+      delete this._socket;
+    }
     if (this._container) {
       this._container.innerHTML = '';
       delete this._container;

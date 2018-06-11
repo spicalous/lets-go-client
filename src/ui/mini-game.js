@@ -2,13 +2,13 @@ import Container from './container';
 
 class MiniGame extends Container {
 
-  constructor(socket) {
+  constructor() {
     super();
-    this._socket = socket;
     this._onResize = this._onResize.bind(this);
   }
 
-  initListeners() {
+  startListening(socket) {
+    super.startListening(socket);
     window.addEventListener('resize', this._onResize, false);
   }
 
@@ -18,7 +18,6 @@ class MiniGame extends Container {
 
   destroy() {
     window.removeEventListener('resize', this._onResize, false);
-    delete this._socket;
     super.destroy();
   }
 }

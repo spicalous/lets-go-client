@@ -6,10 +6,6 @@ const MAX_FPS = 1000 / 60;
 
 class CursorTracker extends MiniGame {
 
-  constructor(socket) {
-    super(socket);
-  }
-
   /**
    * @override
    */
@@ -29,8 +25,8 @@ class CursorTracker extends MiniGame {
   /**
    * @override
    */
-  initListeners() {
-    super.initListeners();
+  startListening(socket) {
+    super.startListening(socket);
     this._throttledEmitPointerLocation = throttle(this._emitPointerLocation.bind(this), MAX_FPS);
     this._throttledEmitTouchLocation = throttle(this._emitTouchLocation.bind(this), MAX_FPS);
 

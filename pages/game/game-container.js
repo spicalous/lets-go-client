@@ -2,19 +2,17 @@ import Container from "../../src/ui/container";
 
 class GameContainer extends Container {
 
-  constructor(socket, gameId) {
+  constructor(gameId) {
     super();
-    this._socket = socket;
     this._gameId = gameId;
   }
 
-  initDOM(container) {
-    super.initDOM(container);
-
+  startListening(socket) {
+    super.startListening(socket);
+    
     this._socket.emit('join game', this._gameId, (data) => {
-
       if (data.error) {
-        this._displayError(data.error);
+        this.displayError(data.error);
       } else {
         console.log("TODO!");
       }

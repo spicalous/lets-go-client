@@ -7,8 +7,9 @@ import GameContainer from './game-container';
 const socket = io(`${window.location.hostname}:3000/game`);
 const gameId = extract('id', window.location.search);
 
-const gameContainer = new GameContainer(socket, gameId);
+const gameContainer = new GameContainer(gameId);
 
 onDOMReady(() => {
   gameContainer.initDOM(document.body);
+  gameContainer.startListening(socket);
 })

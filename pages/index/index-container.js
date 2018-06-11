@@ -1,6 +1,6 @@
 import Container from "../../src/ui/container";
 
-class IndexContainer extends  Container {
+class IndexContainer extends Container {
 
   constructor() {
     super();
