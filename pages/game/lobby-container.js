@@ -9,7 +9,8 @@ class LobbyContainer extends Container {
 
   initDOM(container) {
     super.initDOM(container);
-    // TODO lobby DOM
+    this._playersEl = document.createElement('div');
+    this._container.append(this._playersEl);
   }
 
   startListening(socket) {
@@ -17,8 +18,12 @@ class LobbyContainer extends Container {
     this._socket.on('players changed', this._updatePlayers);
   }
 
+  setPlayers(players) {
+    this._playersEl.innerHTML = players.join(", ");
+  }
+
   _updatePlayers(players) {
-    console.log(players);
+    this._playersEl.innerHTML = players.join(", ");
   }
 
 }
