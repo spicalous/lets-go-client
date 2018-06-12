@@ -18,12 +18,29 @@ class LobbyContainer extends Container {
     this._socket.on('players changed', this._updatePlayers);
   }
 
-  setPlayers(players) {
-    this._playersEl.innerHTML = players.join(", ");
+  /**
+   * 
+   * @param {Object} game
+   * @param {string} game.id
+   * * @param {string} game.leader
+   * @param {string[]} game.players
+   */
+  setGame(game) {
+    this._updatePlayers(game.leader, game.players);
   }
 
-  _updatePlayers(players) {
-    this._playersEl.innerHTML = players.join(", ");
+  /**
+   * 
+   * @param {string} leader 
+   * @param {string[]} players 
+   */
+  _updatePlayers(leader, players) {
+    this._playersEl.innerHTML = '';
+    players.forEach((player) => {
+      let el = document.createElement('div');
+      el.innerHTML = leader === player ? `${player} *` : player;
+      this._playersEl.append(el);
+    });
   }
 
 }
