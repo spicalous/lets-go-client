@@ -17,7 +17,7 @@ class GameContainer extends Container {
       } else {
         const lobbyContainer = new LobbyContainer();
         lobbyContainer.initDOM(this._container);
-        lobbyContainer.setGame(data);
+        lobbyContainer.setGame(this._socket.id, data);
         lobbyContainer.startListening(this._socket);
       }
     });

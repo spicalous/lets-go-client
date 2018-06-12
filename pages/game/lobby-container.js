@@ -1,3 +1,4 @@
+import Button from "../../src/ui/components/button";
 import Container from "../../src/ui/container";
 
 class LobbyContainer extends Container {
@@ -9,8 +10,11 @@ class LobbyContainer extends Container {
 
   initDOM(container) {
     super.initDOM(container);
+    
     this._playersEl = document.createElement('div');
-    this._container.append(this._playersEl);
+    this._startBtnContainer = document.createElement('div');
+    
+    this._container.append(this._playersEl, this._startBtnContainer);
   }
 
   startListening(socket) {
@@ -20,17 +24,26 @@ class LobbyContainer extends Container {
 
   /**
    * 
+   * @param {string} playerId
    * @param {Object} game
    * @param {string} game.id
-   * * @param {string} game.leader
+   * @param {string} game.leader
    * @param {string[]} game.players
    */
-  setGame(game) {
+  setGame(playerId, game) {
+    this._playerId = playerId;
     this._updatePlayers(game.leader, game.players);
   }
 
   /**
    * 
+   */
+  _startGame() {
+    alert('start!');
+  }
+
+  /**
+   *
    * @param {string} leader 
    * @param {string[]} players 
    */
@@ -41,6 +54,14 @@ class LobbyContainer extends Container {
       el.innerHTML = leader === player ? `${player} *` : player;
       this._playersEl.append(el);
     });
+
+    if (leader === this._playerId) {
+      if (!this._startBtn) {
+        this._startBtn = new Button('START GAME').onClick(this._startGame, this);
+        this._startBtnContainer.append(this._startBtn.element());
+      } 
+      this._startBtn.enable(players.length > 1)
+    }
   }
 
 }

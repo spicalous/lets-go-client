@@ -1,3 +1,5 @@
+import Button from './components/button';
+
 class Container {
 
   initDOM(container) {
@@ -16,14 +18,10 @@ class Container {
     messageEl.className = 'error-message';
     messageEl.innerHTML = message;
 
-    const homeBtnEl = document.createElement('button');
-    homeBtnEl.innerHTML = 'BACK';
-    homeBtnEl.setAttribute('type', 'button');
-    homeBtnEl.addEventListener('click', () => window.location = `${window.location.origin}`);
+    const homeBtn = new Button('BACK');
+    homeBtn.onClick(() => window.location = `${window.location.origin}`)
 
-    errorContainerEl.append(messageEl);
-    errorContainerEl.append(homeBtnEl);
-
+    errorContainerEl.append(messageEl, homeBtn.element());
     this._container.append(errorContainerEl);
   }
 

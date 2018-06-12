@@ -10,4 +10,9 @@ button {
     color: black;
     background-color: $white;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
 }
