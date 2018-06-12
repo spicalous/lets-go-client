@@ -1,5 +1,6 @@
 import Container from "../../src/ui/container";
 import LobbyContainer from "./lobby-container";
+import * as MiniGames from "../../mini-games/index";
 
 class GameContainer extends Container {
 
@@ -19,8 +20,14 @@ class GameContainer extends Container {
         lobbyContainer.initDOM(this._container);
         lobbyContainer.setGame(this._socket.id, data);
         lobbyContainer.startListening(this._socket);
+        this._socket.on('game start', this._onGameStart.bind(this, lobbyContainer));
       }
     });
+  }
+
+  _onGameStart(lobby) {
+    lobby.destroy();
+    const miniGame = new MiniGames.TugOfWar();
   }
 
 }

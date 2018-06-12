@@ -25,6 +25,7 @@ class LobbyContainer extends Container {
   /**
    * 
    * @param {string} playerId
+   * @param {Function} onStart
    * @param {Object} game
    * @param {string} game.id
    * @param {string} game.leader
@@ -39,7 +40,7 @@ class LobbyContainer extends Container {
    * 
    */
   _startGame() {
-    alert('start!');
+    this._socket.emit('start game');
   }
 
   /**
@@ -62,6 +63,13 @@ class LobbyContainer extends Container {
       } 
       this._startBtn.enable(players.length > 1)
     }
+  }
+
+  destroy() {
+    if (this._startBtn) {
+      this._startBtn.destroy();
+    }
+    super.destroy();
   }
 
 }
