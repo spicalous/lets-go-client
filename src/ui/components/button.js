@@ -14,20 +14,10 @@ class Button {
   }
 
   /**
-   * 
-   * @param {Element} container 
-   * @returns this;
-   */
-  appendTo(container) {
-    container.append(this._button);
-    return this;
-  }
-
-  /**
-   * 
-   * @param {Function} handler 
+   *
+   * @param {Function} handler
    * @param {*} [context]
-   * @returns this;
+   * @returns {Button}
    */
   onClick(handler, context) {
     this._handler = handler.bind(context);
@@ -36,13 +26,13 @@ class Button {
   }
 
   /**
-   * 
-   * @param {boolean} enable 
-   * @returns this;
+   *
+   * @param {boolean} enable
+   * @returns {Button}
    */
   enable(enable) {
     if (enable) {
-      this._button.removeAttribute('disabled', '');  
+      this._button.removeAttribute('disabled', '');
     } else {
       this._button.setAttribute('disabled', '');
     }

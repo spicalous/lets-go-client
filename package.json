@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.config",
     "start": "webpack-dev-server --config webpack.dev.config --open",
     "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "eslint src/ && eslint test/ --global describe,it",
+    "test:lint": "eslint src/ && eslint test/ --global assert,describe,it,beforeEach,afterEach",
     "test:unit": "karma start karma.conf.js --single-run"
   },
   "author": "",

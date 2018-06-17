@@ -1,14 +1,14 @@
-import Container from './container';
+import SocketContainer from './socket-container';
 
-class MiniGame extends Container {
+class MiniGame extends SocketContainer {
 
-  constructor() {
-    super();
+  constructor(socket) {
+    super(socket);
     this._onResize = this._onResize.bind(this);
   }
 
-  startListening(socket) {
-    super.startListening(socket);
+  startListening() {
+    super.startListening();
     window.addEventListener('resize', this._onResize, false);
   }
 

@@ -17,7 +17,6 @@ module.exports = {
     new ExtractTextPlugin("[name].css"),
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: "pages/index/index.html",
       title: "Lets Go",
       chunks: ["index"]
     }),

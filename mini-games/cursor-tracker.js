@@ -25,8 +25,8 @@ class CursorTracker extends MiniGame {
   /**
    * @override
    */
-  startListening(socket) {
-    super.startListening(socket);
+  startListening() {
+    super.startListening();
     this._throttledEmitPointerLocation = throttle(this._emitPointerLocation.bind(this), MAX_FPS);
     this._throttledEmitTouchLocation = throttle(this._emitTouchLocation.bind(this), MAX_FPS);
 

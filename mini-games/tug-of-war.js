@@ -2,8 +2,8 @@ import MiniGame from "../src/ui/mini-game";
 
 class TugOfWar extends MiniGame {
 
-  constructor() {
-    super();
+  constructor(socket) {
+    super(socket);
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onUpdate = this._onUpdate.bind(this);
   }
@@ -17,8 +17,8 @@ class TugOfWar extends MiniGame {
     this._container.append(this._scoreEl);
   }
 
-  startListening(socket) {
-    super.startListening(socket);
+  startListening() {
+    super.startListening();
     window.addEventListener('keydown', this._onKeyDown, false);
   }
 

@@ -1,21 +1,64 @@
+import Button from "../../src/ui/components/button";
 import Container from "../../src/ui/container";
 
 class IndexContainer extends Container {
 
   constructor() {
     super();
-    this._createGame = this._createGame.bind(this);
+    this._name = 'index-container';
   }
 
-  initDOM(container) {
-    super.initDOM(container);
-    this._roomContainer = this._container.querySelector('.room-container');
-    this._createButton = this._container.querySelector('#btn-id-create');
-    this._createButton.addEventListener('click', this._createGame, false);
+  initDOM(parent) {
+    super.initDOM(parent);
+    let inputContainer = document.createElement('div');
+    let actionContainer = document.createElement('div');
+    this._roomContainer = document.createElement('div');
+
+    inputContainer.className = 'input-container';
+    actionContainer.className = 'action-container';
+    this._roomContainer.className = 'room-container';
+
+    this._createInput(inputContainer);
+    this._createActions(actionContainer);
+
+    this._container.append(inputContainer, actionContainer, this._roomContainer);
 
     fetch('api/games')
-      .then((response) => response.json())
-      .then(this._handleGamesList.bind(this));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to fetch games');
+        }
+        return response.json();
+      })
+      .then(this._handleGamesList.bind(this))
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
+
+  _createInput(parent) {
+    let label = document.createElement('label');
+    let username = document.createElement('div');
+    let input = document.createElement('input');
+
+    input.setAttribute('type', 'text');
+    input.setAttribute('placeholder', 'ANONYMOUS');
+
+    label.append(username, input);
+    parent.append(label);
+  }
+
+  _createActions(parent) {
+    let orEl = document.createElement('div');
+    let joinGameEl = document.createElement('div');
+
+    orEl.innerHTML = 'OR';
+    joinGameEl.innerHTML = 'JOIN EXISTING GAME';
+
+    this._createButton = new Button('CREATE GAME');
+    this._createButton.onClick(this._createGame, this);
+
+    parent.append(this._createButton.element(), orEl, joinGameEl);
   }
 
   _createGame() {
@@ -41,7 +84,7 @@ class IndexContainer extends Container {
 
   destroy() {
     // TODO remove room list event handlers
-    this._createButton.removeEventListener('click', this._createGame, false);
+    this._createButton.destroy();
     super.destroy();
   }
 

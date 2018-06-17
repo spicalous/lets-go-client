@@ -1,10 +1,11 @@
 import Button from "../../src/ui/components/button";
-import Container from "../../src/ui/container";
+import SocketContainer from "../../src/ui/socket-container";
 
-class LobbyContainer extends Container {
+class LobbyContainer extends SocketContainer {
 
-  constructor() {
-    super();
+  constructor(socket) {
+    super(socket);
+    this._playerId = socket.id;
     this._updatePlayers = this._updatePlayers.bind(this);
   }
 
@@ -17,22 +18,19 @@ class LobbyContainer extends Container {
     this._container.append(this._playersEl, this._startBtnContainer);
   }
 
-  startListening(socket) {
-    super.startListening(socket);
+  startListening() {
     this._socket.on('players changed', this._updatePlayers);
   }
 
   /**
    * 
-   * @param {string} playerId
    * @param {Function} onStart
    * @param {Object} game
    * @param {string} game.id
    * @param {string} game.leader
    * @param {string[]} game.players
    */
-  setGame(playerId, game) {
-    this._playerId = playerId;
+  setGame(game) {
     this._updatePlayers(game.leader, game.players);
   }
 
