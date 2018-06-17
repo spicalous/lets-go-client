@@ -28,6 +28,9 @@ class GameContainer extends Container {
   _onGameStart(lobby) {
     lobby.destroy();
     const miniGame = new MiniGames.TugOfWar();
+    miniGame.initDOM(this._container);
+    miniGame.startListening(this._socket);
+    miniGame.start();
   }
 
 }

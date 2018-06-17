@@ -12,6 +12,10 @@ class MiniGame extends Container {
     window.addEventListener('resize', this._onResize, false);
   }
 
+  start() {
+
+  }
+
   _onResize() {
 
   }
