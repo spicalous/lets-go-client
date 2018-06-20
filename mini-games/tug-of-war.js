@@ -14,7 +14,8 @@ class TugOfWar extends MiniGame {
   initDOM(container) {
     super.initDOM(container);
     this._scoreEl = document.createElement('div');
-    this._container.append(this._scoreEl);
+    this._displayEl = document.createElement('div');
+    this._container.append(this._scoreEl, this._displayEl);
   }
 
   startListening() {
@@ -34,12 +35,30 @@ class TugOfWar extends MiniGame {
 
   _onUpdate(state) {
     this._scoreEl.innerHTML = '';
+    this._displayEl.innerHTML = '';
 
-    Object.keys(state).forEach((player) => {
+    let players = Object.keys(state);
+    let visualScore = {};
+    let total = 0;
+
+    players.forEach((player) => {
+
       let playerEl = document.createElement('div');
       playerEl.innerHTML = `${player} has ${state[player]} points`;
       this._scoreEl.append(playerEl);
+
+      visualScore[player] = document.createElement('div');
+      this._displayEl.append(visualScore[player]);
+
+      total = total + state[player];
     });
+
+    let colours = ['red', 'blue'];
+
+    players.forEach((player, i) => {
+      visualScore[player].style = `display: inline-block; height: 300px; width: ${(state[player]/total)*100}%; background-color: ${colours[i]}`;
+    });
+
   }
 }
 
