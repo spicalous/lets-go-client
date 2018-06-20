@@ -6,35 +6,59 @@ import LobbyContainer from "./lobby-container";
 import PopUp from "../../src/ui/components/pop-up";
 import * as MiniGames from "../../mini-games/index";
 
-const socket = io(`${window.location.hostname}:3000/game`);
 const gameId = extract('id', window.location.search);
 
 onDOMReady(() => {
 
-  socket.emit('join game', gameId, (data) => {
-    if (data.error) {
-      new PopUp({
-        message: data.error,
-        actions: [
-          {
-            name: 'BACK',
-            handler: () => window.location = `${window.location.origin}`,
-            context: null
-          }
-        ]
-      })
-    } else {
-      const lobbyContainer = new LobbyContainer(socket);
-      lobbyContainer.initDOM(document.body);
-      lobbyContainer.setGame(data);
-      lobbyContainer.startListening();
-      socket.on('game start', onGameStart.bind(null, lobbyContainer));
-    }
-  });
-
+  joinGame(gameId)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Unable to fetch games');
+      }
+      return response.json();
+    })
+    .then(handleJoinGame);
 });
 
-function onGameStart(lobbyContainer) {
+/**
+ * @param {string} id
+ * @returns {Promise}
+ */
+function joinGame(id) {
+  return fetch('api/games/join', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ id: gameId })
+  });
+}
+
+function handleJoinGame(response) {
+
+  if (response.type === 'ERROR') {
+    new PopUp({
+      message: response.message,
+      actions: [
+        {
+          name: 'BACK',
+          handler: () => window.location = `${window.location.origin}`,
+          context: null
+        }
+      ]
+    });
+  } else {
+    const { id } = response;
+    const socket = io(`${window.location.hostname}:3000/${id}`);
+
+    socket.on('connect', () => {
+      const lobbyContainer = new LobbyContainer(socket);
+      lobbyContainer.initDOM(document.body);
+      lobbyContainer.onGameStart(onGameStart, this);
+      lobbyContainer.startListening();
+    });
+  }
+}
+
+function onGameStart(socket, lobbyContainer) {
     lobbyContainer.destroy();
     const miniGame = new MiniGames.TugOfWar(socket);
     miniGame.initDOM(document.body);

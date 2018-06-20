@@ -20,18 +20,15 @@ class LobbyContainer extends SocketContainer {
 
   startListening() {
     this._socket.on('players changed', this._updatePlayers);
+    this._socket.on('game start', this._onGameStart.bind(this._onGameStartContext, this._socket, this));
   }
 
   /**
-   * 
-   * @param {Function} onStart
-   * @param {Object} game
-   * @param {string} game.id
-   * @param {string} game.leader
-   * @param {string[]} game.players
+   * @param {Function} cb
    */
-  setGame(game) {
-    this._updatePlayers(game.leader, game.players);
+  onGameStart(cb, context) {
+    this._onGameStart = cb;
+    this._onGameStartContext = context;
   }
 
   /**
