@@ -3,11 +3,6 @@ import Container from "../../src/ui/container";
 
 class IndexContainer extends Container {
 
-  constructor() {
-    super();
-    this._name = 'index-container';
-  }
-
   initDOM(parent) {
     super.initDOM(parent);
     let inputContainer = document.createElement('div');
@@ -41,6 +36,7 @@ class IndexContainer extends Container {
     let username = document.createElement('div');
     let input = document.createElement('input');
 
+    username.innerHTML = 'USERNAME';
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'ANONYMOUS');
 
