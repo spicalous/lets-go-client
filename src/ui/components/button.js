@@ -1,8 +1,8 @@
 class Button {
 
   constructor(text) {
-    this._button = document.createElement('button');
-    this._button.setAttribute('type', 'button');
+    this._button = document.createElement("button");
+    this._button.setAttribute("type", "button");
     this._button.innerHTML = text;
   }
 
@@ -21,7 +21,7 @@ class Button {
    */
   onClick(handler, context) {
     this._handler = handler.bind(context);
-    this._button.addEventListener('click', this._handler, false);
+    this._button.addEventListener("click", this._handler, false);
     return this;
   }
 
@@ -32,15 +32,15 @@ class Button {
    */
   enable(enable) {
     if (enable) {
-      this._button.removeAttribute('disabled', '');
+      this._button.removeAttribute("disabled", "");
     } else {
-      this._button.setAttribute('disabled', '');
+      this._button.setAttribute("disabled", "");
     }
     return this;
   }
 
   destroy() {
-    this._button.removeEventListener('click', this._handler, false);
+    this._button.removeEventListener("click", this._handler, false);
     this._button.parentNode.removeChild(this._button);
     delete this._button;
   }

@@ -1,4 +1,4 @@
-import Button from './button';
+import Button from "./button";
 
 class PopUp {
 
@@ -8,7 +8,7 @@ class PopUp {
    * @param {Object[]} options.actions
    */
   constructor(options) {
-    this._popUpEl = document.createElement('div');
+    this._popUpEl = document.createElement("div");
 
     this._createMessageElement(this._popUpEl, options.message);
     this._createActions(this._popUpEl, options.actions);
@@ -21,7 +21,7 @@ class PopUp {
    * @param {string} message
    */
   _createMessageElement(container, message) {
-    let messageEl = document.createElement('div');
+    let messageEl = document.createElement("div");
     messageEl.innerHTML = message;
     container.append(messageEl);
   }
@@ -31,7 +31,7 @@ class PopUp {
    * @param {Object[]} actions
    */
   _createActions(container, actions) {
-    let actionsEl = document.createElement('div');
+    let actionsEl = document.createElement("div");
 
     this._buttons = actions.map((action) => {
       let button = new Button(action.name);

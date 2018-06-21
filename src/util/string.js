@@ -4,11 +4,11 @@
 export function dasherise(s) {
 
   if (!s) {
-    return '';
+    return "";
   }
 
-  return s.replace(' ', '-')      // replace whitespace
+  return s.replace(" ", "-")      // replace whitespace
     .split(/(?=[A-Z])/)           // split by uppercase characters
     .map((w) => w.toLowerCase())  // lowercase
-    .join('-');                   // join with dash
+    .join("-");                   // join with dash
 }

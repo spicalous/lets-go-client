@@ -4,8 +4,8 @@
  */
 export function onDOMReady(fn) {
   const onDOMContentLoaded = function() {
-    document.removeEventListener('DOMContentLoaded', onDOMContentLoaded, false);
+    document.removeEventListener("DOMContentLoaded", onDOMContentLoaded, false);
     fn();
   };
-  document.addEventListener('DOMContentLoaded', onDOMContentLoaded, false);
+  document.addEventListener("DOMContentLoaded", onDOMContentLoaded, false);
 }

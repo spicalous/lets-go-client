@@ -1,4 +1,4 @@
-import { dasherise } from '../util/string';
+import { dasherise } from "../util/string";
 
 class Container {
 
@@ -6,7 +6,7 @@ class Container {
    * @param {Element} parent
    */
   initDOM(parent) {
-    this._container = document.createElement('div');
+    this._container = document.createElement("div");
     this._container.className = dasherise(this.constructor.name);
     parent.append(this._container);
   }

@@ -1,4 +1,4 @@
-import SocketContainer from './socket-container';
+import SocketContainer from "./socket-container";
 
 class MiniGame extends SocketContainer {
 
@@ -9,7 +9,7 @@ class MiniGame extends SocketContainer {
 
   startListening() {
     super.startListening();
-    window.addEventListener('resize', this._onResize, false);
+    window.addEventListener("resize", this._onResize, false);
   }
 
   start() {
@@ -21,7 +21,7 @@ class MiniGame extends SocketContainer {
   }
 
   destroy() {
-    window.removeEventListener('resize', this._onResize, false);
+    window.removeEventListener("resize", this._onResize, false);
     super.destroy();
   }
 }
