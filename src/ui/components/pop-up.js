@@ -9,6 +9,7 @@ class PopUp {
    */
   constructor(options) {
     this._popUpEl = document.createElement("div");
+    this._popUpEl.className = "pop-up";
 
     this._createMessageElement(this._popUpEl, options.message);
     this._createActions(this._popUpEl, options.actions);

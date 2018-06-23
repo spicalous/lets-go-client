@@ -13,11 +13,23 @@ onDOMReady(() => {
   joinGame(gameId)
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Unable to fetch games');
+        throw new Error('Error: ' + response.status);
       }
       return response.json();
     })
-    .then(handleJoinGame);
+    .then(handleJoinGame)
+    .catch((error) => {
+      new PopUp({
+        message: error.message,
+        actions: [
+          {
+            name: 'BACK',
+            handler: () => window.location = `${window.location.origin}`,
+            context: null
+          }
+        ]
+      });
+    });
 });
 
 /**
