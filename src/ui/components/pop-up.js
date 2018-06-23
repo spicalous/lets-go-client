@@ -33,6 +33,7 @@ class PopUp {
    */
   _createActions(container, actions) {
     let actionsEl = document.createElement("div");
+    actionsEl.className = "pop-up_actions";
 
     this._buttons = actions.map((action) => {
       let button = new Button(action.name);
