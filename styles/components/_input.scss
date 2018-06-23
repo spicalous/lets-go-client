@@ -1,7 +1,6 @@
 label {
   margin: 12px;
   text-align: center;
-  color: $grey-400;
 }
 
 input {
@@ -10,7 +9,6 @@ input {
   outline: 0;
   border: 0;
   text-align: center;
-  border-bottom: 2px solid $grey-400;
+  border-bottom: 2px solid;
   background-color: transparent;
-  color: $white;
 }

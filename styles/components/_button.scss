@@ -1,18 +1,22 @@
 button {
-  outline: 0;
   cursor: pointer;
   font-size: 16px;
-  color: $white;
-  background-color: transparent;
   padding: 12px;
+  border-radius: 4px;
+  box-shadow: $box-shadow;
 
   &:active {
     color: black;
-    background-color: $white;
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.3;
   }
+}
+
+.btn-main {
+  color: $white;
+  border-color: $indigo-400;
+  background-color: $indigo-400;
 }

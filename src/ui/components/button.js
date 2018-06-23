@@ -1,9 +1,10 @@
 class Button {
 
-  constructor(text) {
+  constructor(text, { className } = { className: "btn-main" }) {
     this._button = document.createElement("button");
     this._button.setAttribute("type", "button");
     this._button.innerHTML = text;
+    this._button.className = className;
   }
 
   /**
