@@ -33,14 +33,12 @@ class IndexContainer extends Container {
 
   _createInput(parent) {
     let label = document.createElement('label');
-    let username = document.createElement('div');
     let input = document.createElement('input');
 
-    username.innerHTML = 'USERNAME';
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'ANONYMOUS');
 
-    label.append(username, input);
+    label.append(input);
     parent.append(label);
   }
 
