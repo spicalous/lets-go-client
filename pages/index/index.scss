@@ -19,7 +19,6 @@
   }
 
   .action-container {
-    margin-top: 12px;
 
     button,
     div {
@@ -30,18 +29,33 @@
 
   .room-container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
+    overflow: scroll;
 
-    padding: 12px;
-    margin: 12px;
-    background-color: $white;
-    border-radius: 4px;
-    box-shadow: $box-shadow;
+    .room-list {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
 
-    .room-item {
-      cursor: pointer;
+      margin: 12px;
+      background-color: $white;
+      border-radius: 4px;
+      box-shadow: $box-shadow;
+      padding: 0 12px;
+
+      .room-item {
+        flex: 0 0 0%;
+        min-width: 200px;
+        padding: 8px;
+        cursor: pointer;
+
+        border-top: 1px solid $grey-300;
+
+        &:first-child {
+          border-top: none;
+        }
+      }
+
     }
   }
 }

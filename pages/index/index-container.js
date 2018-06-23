@@ -7,16 +7,17 @@ class IndexContainer extends Container {
     super.initDOM(parent);
     let inputContainer = document.createElement('div');
     let actionContainer = document.createElement('div');
-    this._roomContainer = document.createElement('div');
+    let roomContainer = document.createElement('div');
 
     inputContainer.className = 'input-container';
     actionContainer.className = 'action-container';
-    this._roomContainer.className = 'room-container';
+    roomContainer.className = 'room-container';
 
     this._createInput(inputContainer);
     this._createActions(actionContainer);
+    this._createRoomList(roomContainer);
 
-    this._container.append(inputContainer, actionContainer, this._roomContainer);
+    this._container.append(inputContainer, actionContainer, roomContainer);
 
     fetch('api/games')
       .then((response) => {
@@ -31,7 +32,7 @@ class IndexContainer extends Container {
       });
   }
 
-  _createInput(parent) {
+  _createInput(container) {
     let label = document.createElement('label');
     let input = document.createElement('input');
 
@@ -39,10 +40,10 @@ class IndexContainer extends Container {
     input.setAttribute('placeholder', 'ANONYMOUS');
 
     label.append(input);
-    parent.append(label);
+    container.append(label);
   }
 
-  _createActions(parent) {
+  _createActions(container) {
     let orEl = document.createElement('div');
     let joinGameEl = document.createElement('div');
 
@@ -52,7 +53,14 @@ class IndexContainer extends Container {
     this._createButton = new Button('CREATE GAME');
     this._createButton.onClick(this._createGame, this);
 
-    parent.append(this._createButton.element(), orEl, joinGameEl);
+    container.append(this._createButton.element(), orEl, joinGameEl);
+  }
+
+  _createRoomList(container) {
+    this._roomList = document.createElement("div");
+    this._roomList.className = "room-list"
+
+    container.append(this._roomList);
   }
 
   _createGame() {
@@ -68,7 +76,7 @@ class IndexContainer extends Container {
       roomListItem.innerHTML = gameId;
       roomListItem.className = 'room-item';
       roomListItem.addEventListener('click', this._enterGame.bind(this, gameId, false));
-      this._roomContainer.append(roomListItem);
+      this._roomList.append(roomListItem);
     });
   }
 
