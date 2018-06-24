@@ -11,4 +11,8 @@ input {
   text-align: center;
   border-bottom: 2px solid;
   background-color: transparent;
+
+  &:invalid {
+    color: red;
+  }
 }

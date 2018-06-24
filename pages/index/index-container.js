@@ -39,7 +39,14 @@ class IndexContainer extends Container {
    */
   _createInput(container) {
     let label = document.createElement("label");
+    let username = window.localStorage.getItem("username");
+
     this._input = new Input({ placeholder: "ANONYMOUS" });
+    this._input.onChange(this._handleInputChange, this);
+
+    if (username) {
+      this._input.setValue(username);
+    }
 
     label.append(this._input.element());
     container.append(label);
@@ -83,6 +90,26 @@ class IndexContainer extends Container {
       roomListItem.addEventListener("click", this._enterGame.bind(this, gameId, false));
       this._roomList.append(roomListItem);
     });
+  }
+
+  /**
+   * @param {string} value
+   */
+  _handleInputChange(value) {
+
+    if (!value) {
+      this._input.setValidityMessage("");
+      window.localStorage.removeItem("username");
+      return;
+    }
+
+    if  (/^[A-Za-z0-9-_ ]+$/.test(value) && value.length < 32) {
+      this._input.setValue(value.toUpperCase());
+      this._input.setValidityMessage("");
+      window.localStorage.setItem("username", value.toUpperCase());
+    } else {
+      this._input.setValidityMessage("Only A-Z, a-z, 0-9, -, _, and spaces allowed");
+    }
   }
 
   /**
