@@ -1,5 +1,10 @@
 class Button {
 
+  /**
+   * @param {string} text
+   * @param {Object} [options]
+   * @param {string} [options.className="btn-main"]
+   */
   constructor(text, { className } = { className: "btn-main" }) {
     this._button = document.createElement("button");
     this._button.setAttribute("type", "button");
@@ -40,6 +45,9 @@ class Button {
     return this;
   }
 
+  /**
+   *
+   */
   destroy() {
     this._button.removeEventListener("click", this._handler, false);
     this._button.parentNode.removeChild(this._button);

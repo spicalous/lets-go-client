@@ -6,8 +6,7 @@ describeDOM("ui/container", function() {
   let container;
 
   beforeEach(function() {
-    container = new Container();
-    container.initDOM(this.testContainer);
+    container = new Container(this.testContainer);
   });
 
   it("initDom appends a container to element", function() {

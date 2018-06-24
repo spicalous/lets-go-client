@@ -1,5 +1,6 @@
 /**
  * @param {string} s
+ * @returns {string}
  */
 export function dasherise(s) {
 

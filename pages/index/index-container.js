@@ -3,8 +3,9 @@ import Container from "../../src/ui/container";
 
 class IndexContainer extends Container {
 
-  initDOM(parent) {
-    super.initDOM(parent);
+  constructor(parent) {
+    super(parent);
+
     let inputContainer = document.createElement('div');
     let actionContainer = document.createElement('div');
     let roomContainer = document.createElement('div');
@@ -32,6 +33,9 @@ class IndexContainer extends Container {
       });
   }
 
+  /**
+   * @param {Element} container
+   */
   _createInput(container) {
     let label = document.createElement('label');
     let input = document.createElement('input');
@@ -43,6 +47,9 @@ class IndexContainer extends Container {
     container.append(label);
   }
 
+  /**
+   * @param {Element} container
+   */
   _createActions(container) {
     let orEl = document.createElement('div');
     let joinGameEl = document.createElement('div');
@@ -56,17 +63,14 @@ class IndexContainer extends Container {
     container.append(this._createButton.element(), orEl, joinGameEl);
   }
 
+  /**
+   * @param {Element} container
+   */
   _createRoomList(container) {
     this._roomList = document.createElement("div");
     this._roomList.className = "room-list"
 
     container.append(this._roomList);
-  }
-
-  _createGame() {
-    fetch('api/games/create', { method: 'POST' })
-      .then((response) => response.json())
-      .then((game) => this._enterGame(game.id));
   }
 
   _handleGamesList(gameIds) {
@@ -80,10 +84,25 @@ class IndexContainer extends Container {
     });
   }
 
+  /**
+   *
+   */
+  _createGame() {
+    fetch('api/games/create', { method: 'POST' })
+      .then((response) => response.json())
+      .then((game) => this._enterGame(game.id));
+  }
+
+  /**
+   * @param {string} gameId
+   */
   _enterGame(gameId) {
     window.location = `${window.location}game?id=${gameId}`;
   }
 
+  /**
+   * @override
+   */
   destroy() {
     // TODO remove room list event handlers
     this._createButton.destroy();

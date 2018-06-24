@@ -30,6 +30,9 @@ class PopUp {
   /**
    * @param {Element} container
    * @param {Object[]} actions
+   * @param {string} actions[].name
+   * @param {Function} actions[].handler
+   * @param {*} actions[].context
    */
   _createActions(container, actions) {
     let actionsEl = document.createElement("div");
@@ -45,11 +48,18 @@ class PopUp {
     container.append(actionsEl);
   }
 
+  /**
+   * @param {Function} handler
+   * @param {*} context
+   */
   _onDismiss(handler, context) {
     handler.call(context);
     this.destroy();
   }
 
+  /**
+   *
+   */
   destroy() {
     document.body.removeChild(this._popUpEl);
     this._buttons.forEach((button) => button.destroy());

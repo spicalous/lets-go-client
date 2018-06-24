@@ -62,8 +62,7 @@ function handleJoinGame(response) {
     const socket = io(`${window.location.hostname}:3000/${id}`);
 
     socket.on('connect', () => {
-      const lobbyContainer = new LobbyContainer(socket);
-      lobbyContainer.initDOM(document.body);
+      const lobbyContainer = new LobbyContainer(document.body, socket);
       lobbyContainer.onGameStart(onGameStart, this);
       lobbyContainer.startListening();
     });
@@ -72,8 +71,7 @@ function handleJoinGame(response) {
 
 function onGameStart(socket, lobbyContainer) {
     lobbyContainer.destroy();
-    const miniGame = new MiniGames.TugOfWar(socket);
-    miniGame.initDOM(document.body);
+    const miniGame = new MiniGames.TugOfWar(document.body, socket);
     miniGame.startListening();
     miniGame.start();
 }

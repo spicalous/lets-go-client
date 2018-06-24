@@ -1,6 +1,7 @@
 /**
  * @param {string} key
  * @param {string} [s]
+ * @returns {string}
  */
 export function extract(key, s) {
 

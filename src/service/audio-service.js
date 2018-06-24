@@ -1,11 +1,19 @@
-const WEB_AUDIO_SUPPORT = "webkitAudioContext" in window || "AudioContext" in window;
-const noop = function(){};
+import { noop } from "../util/fn";
 
+const WEB_AUDIO_SUPPORT = "webkitAudioContext" in window || "AudioContext" in window;
+
+/**
+ * @param {AudioContext} context
+ */
 function RACE_START(context) {
   const DURATION = 0.5;
   const noteOne = context.createOscillator();
   const noteTwo = context.createOscillator();
   const gain = context.createGain();
+
+  /**
+   * Handles cleaning up of the event listener and closing the audio context
+   */
   const closeContext = function() {
     noteTwo.removeEventListener("ended", closeContext, false);
     context.close();
@@ -35,13 +43,18 @@ function RACE_START(context) {
 
 class AudioService {
 
+  /**
+   *
+   */
   constructor() {
     if (!WEB_AUDIO_SUPPORT) {
       this.play =  noop;
     }
-    window.s = () => this.play(RACE_START);
   }
 
+  /**
+   * @param {Function} sound
+   */
   play(sound) {
     sound(new (window.AudioContext || window.webkitAudioContext)());
   }

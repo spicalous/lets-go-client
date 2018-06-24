@@ -2,17 +2,11 @@ import MiniGame from "../src/ui/mini-game";
 
 class TugOfWar extends MiniGame {
 
-  constructor(socket) {
-    super(socket);
+  constructor(parent, socket) {
+    super(parent, socket);
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onUpdate = this._onUpdate.bind(this);
-  }
 
-  /**
-   * @override
-   */
-  initDOM(container) {
-    super.initDOM(container);
     this._scoreEl = document.createElement('div');
     this._displayEl = document.createElement('div');
     this._container.append(this._scoreEl, this._displayEl);

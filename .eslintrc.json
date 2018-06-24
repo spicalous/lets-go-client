@@ -12,6 +12,26 @@
     "linebreak-style": ["error", "unix"],
     "no-trailing-spaces": ["error"],
     "quotes": ["error", "double"],
+    "require-jsdoc": ["error", {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": false,
+        "ArrowFunctionExpression": true,
+        "FunctionExpression": true
+      }
+    }],
+    "valid-jsdoc": ["error", {
+      "prefer": {
+        "arg": "param",
+        "argument": "param",
+        "return": "returns"
+      },
+      "requireParamDescription": false,
+      "requireReturnDescription": false,
+      "requireParamType": true,
+      "requireReturn": false
+    }],
     "semi": ["error", "always"]
   }
 }

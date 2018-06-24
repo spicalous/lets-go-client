@@ -3,18 +3,18 @@ import SocketContainer from "../../src/ui/socket-container";
 
 class LobbyContainer extends SocketContainer {
 
-  constructor(socket) {
-    super(socket);
+  /**
+   * @param {Element} parent
+   * @param socket
+   */
+  constructor(parent, socket) {
+    super(parent, socket);
     this._playerId = socket.id;
     this._updatePlayers = this._updatePlayers.bind(this);
-  }
 
-  initDOM(container) {
-    super.initDOM(container);
-    
     this._playersEl = document.createElement('div');
     this._startBtnContainer = document.createElement('div');
-    
+
     this._container.append(this._playersEl, this._startBtnContainer);
   }
 
@@ -32,7 +32,7 @@ class LobbyContainer extends SocketContainer {
   }
 
   /**
-   * 
+   *
    */
   _startGame() {
     this._socket.emit('start game');
@@ -40,8 +40,8 @@ class LobbyContainer extends SocketContainer {
 
   /**
    *
-   * @param {string} leader 
-   * @param {string[]} players 
+   * @param {string} leader
+   * @param {string[]} players
    */
   _updatePlayers(leader, players) {
     this._playersEl.innerHTML = '';
@@ -55,7 +55,7 @@ class LobbyContainer extends SocketContainer {
       if (!this._startBtn) {
         this._startBtn = new Button('START GAME').onClick(this._startGame, this);
         this._startBtnContainer.append(this._startBtn.element());
-      } 
+      }
       this._startBtn.enable(players.length > 1)
     }
   }
