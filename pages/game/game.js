@@ -7,6 +7,7 @@ import PopUp from "../../src/ui/components/pop-up";
 import * as MiniGames from "../../mini-games/index";
 
 const gameId = extract("id", window.location.search);
+const username = window.localStorage.getItem("username");
 
 onDOMReady(() => {
 
@@ -62,7 +63,8 @@ function handleJoinGame(response) {
     });
   } else {
     const { id } = response;
-    const socket = io(`${window.location.hostname}:3000/${id}`);
+    const usernameQueryParam = username ? `?username=${username}` : "";
+    const socket = io(`${window.location.hostname}:3000/${id}${usernameQueryParam}`);
 
     socket.on("connect", () => {
       const lobbyContainer = new LobbyContainer(document.body, socket);

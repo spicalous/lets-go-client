@@ -45,13 +45,19 @@ class LobbyContainer extends SocketContainer {
   /**
    *
    * @param {string} leader
-   * @param {string[]} players
+   * @param {Object[]} players
+   * @param {string} players[].id
+   * @param {string} [players[].username]
    */
   _updatePlayers(leader, players) {
     this._playersEl.innerHTML = "";
+
     players.forEach((player) => {
       let el = document.createElement("div");
-      el.innerHTML = leader === player ? `${player} *` : player;
+      let username = player.username || "ANONYMOUS";
+
+      el.innerHTML = leader === player.id ? `${username} *` : username;
+
       this._playersEl.append(el);
     });
 
