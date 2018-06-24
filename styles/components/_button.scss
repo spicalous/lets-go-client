@@ -1,4 +1,5 @@
 button {
+  outline: 0;
   cursor: pointer;
   font-size: 16px;
   padding: 12px;
@@ -6,12 +7,13 @@ button {
   box-shadow: $box-shadow;
 
   &:active {
-    color: black;
+    box-shadow: none;
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.3;
+    box-shadow: none;
   }
 }
 
