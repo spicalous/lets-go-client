@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.config",
     "start": "webpack-dev-server --config webpack.dev.config --open",
     "test": "npm run test:lint && npm run test:unit",
-    "test:lint": "eslint src/ && eslint test/ --global assert,describe,it,beforeEach,afterEach",
+    "test:lint": "eslint src/ pages/ && eslint test/ --global assert,describe,it,beforeEach,afterEach",
     "test:unit": "karma start karma-unit.conf.js --single-run",
     "test:memory": "karma start karma-memory.conf.js"
   },
@@ -34,6 +34,7 @@
     "pixi.js": "4.7.3",
     "promise-polyfill": "7.1.2",
     "sass-loader": "7.0.1",
+    "sinon": "6.0.0",
     "socket.io": "2.1.0",
     "style-loader": "0.19.1",
     "webpack": "3.10.0",

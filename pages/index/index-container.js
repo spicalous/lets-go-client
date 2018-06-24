@@ -1,18 +1,22 @@
 import Button from "../../src/ui/components/button";
+import Input from "../../src/ui/components/input";
 import Container from "../../src/ui/container";
 
 class IndexContainer extends Container {
 
+  /**
+   * @param {Element} parent
+   */
   constructor(parent) {
     super(parent);
 
-    let inputContainer = document.createElement('div');
-    let actionContainer = document.createElement('div');
-    let roomContainer = document.createElement('div');
+    let inputContainer = document.createElement("div");
+    let actionContainer = document.createElement("div");
+    let roomContainer = document.createElement("div");
 
-    inputContainer.className = 'input-container';
-    actionContainer.className = 'action-container';
-    roomContainer.className = 'room-container';
+    inputContainer.className = "input-container";
+    actionContainer.className = "action-container";
+    roomContainer.className = "room-container";
 
     this._createInput(inputContainer);
     this._createActions(actionContainer);
@@ -20,30 +24,24 @@ class IndexContainer extends Container {
 
     this._container.append(inputContainer, actionContainer, roomContainer);
 
-    fetch('api/games')
+    fetch("api/games")
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Unable to fetch games');
+          throw new Error("Unable to fetch games");
         }
         return response.json();
       })
-      .then(this._handleGamesList.bind(this))
-      .catch((error) => {
-        console.log(error.message);
-      });
+      .then(this._handleGamesList.bind(this));
   }
 
   /**
    * @param {Element} container
    */
   _createInput(container) {
-    let label = document.createElement('label');
-    let input = document.createElement('input');
+    let label = document.createElement("label");
+    this._input = new Input({ placeholder: "ANONYMOUS" });
 
-    input.setAttribute('type', 'text');
-    input.setAttribute('placeholder', 'ANONYMOUS');
-
-    label.append(input);
+    label.append(this._input.element());
     container.append(label);
   }
 
@@ -51,13 +49,13 @@ class IndexContainer extends Container {
    * @param {Element} container
    */
   _createActions(container) {
-    let orEl = document.createElement('div');
-    let joinGameEl = document.createElement('div');
+    let orEl = document.createElement("div");
+    let joinGameEl = document.createElement("div");
 
-    orEl.innerHTML = 'OR';
-    joinGameEl.innerHTML = 'JOIN EXISTING GAME';
+    orEl.innerHTML = "OR";
+    joinGameEl.innerHTML = "JOIN EXISTING GAME";
 
-    this._createButton = new Button('CREATE GAME');
+    this._createButton = new Button("CREATE GAME");
     this._createButton.onClick(this._createGame, this);
 
     container.append(this._createButton.element(), orEl, joinGameEl);
@@ -68,18 +66,21 @@ class IndexContainer extends Container {
    */
   _createRoomList(container) {
     this._roomList = document.createElement("div");
-    this._roomList.className = "room-list"
+    this._roomList.className = "room-list";
 
     container.append(this._roomList);
   }
 
+  /**
+   * @param {string[]} gameIds
+   */
   _handleGamesList(gameIds) {
 
     gameIds.forEach((gameId) => {
-      let roomListItem = document.createElement('div');
+      let roomListItem = document.createElement("div");
       roomListItem.innerHTML = gameId;
-      roomListItem.className = 'room-item';
-      roomListItem.addEventListener('click', this._enterGame.bind(this, gameId, false));
+      roomListItem.className = "room-item";
+      roomListItem.addEventListener("click", this._enterGame.bind(this, gameId, false));
       this._roomList.append(roomListItem);
     });
   }
@@ -88,7 +89,7 @@ class IndexContainer extends Container {
    *
    */
   _createGame() {
-    fetch('api/games/create', { method: 'POST' })
+    fetch("api/games/create", { method: "POST" })
       .then((response) => response.json())
       .then((game) => this._enterGame(game.id));
   }
@@ -105,6 +106,7 @@ class IndexContainer extends Container {
    */
   destroy() {
     // TODO remove room list event handlers
+    this._input.destroy();
     this._createButton.destroy();
     super.destroy();
   }

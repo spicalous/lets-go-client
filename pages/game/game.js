@@ -1,19 +1,19 @@
-import 'promise-polyfill/src/polyfill';
-import io from 'socket.io-client';
-import { extract } from '../../src/util/query-param';
-import { onDOMReady } from '../../src/util/dom-ready'
+import "promise-polyfill/src/polyfill";
+import io from "socket.io-client";
+import { extract } from "../../src/util/query-param";
+import { onDOMReady } from "../../src/util/dom-ready";
 import LobbyContainer from "./lobby-container";
 import PopUp from "../../src/ui/components/pop-up";
 import * as MiniGames from "../../mini-games/index";
 
-const gameId = extract('id', window.location.search);
+const gameId = extract("id", window.location.search);
 
 onDOMReady(() => {
 
   joinGame(gameId)
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Error: ' + response.status);
+        throw new Error("Error: " + response.status);
       }
       return response.json();
     })
@@ -23,7 +23,7 @@ onDOMReady(() => {
         message: error.message,
         actions: [
           {
-            name: 'BACK',
+            name: "BACK",
             handler: () => window.location = `${window.location.origin}`,
             context: null
           }
@@ -37,21 +37,24 @@ onDOMReady(() => {
  * @returns {Promise}
  */
 function joinGame(id) {
-  return fetch('api/games/join', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ id: gameId })
+  return fetch("api/games/join", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ id })
   });
 }
 
+/**
+ * @param {Response} response
+ */
 function handleJoinGame(response) {
 
-  if (response.type === 'ERROR') {
+  if (response.type === "ERROR") {
     new PopUp({
       message: response.message,
       actions: [
         {
-          name: 'BACK',
+          name: "BACK",
           handler: () => window.location = `${window.location.origin}`,
           context: null
         }
@@ -61,7 +64,7 @@ function handleJoinGame(response) {
     const { id } = response;
     const socket = io(`${window.location.hostname}:3000/${id}`);
 
-    socket.on('connect', () => {
+    socket.on("connect", () => {
       const lobbyContainer = new LobbyContainer(document.body, socket);
       lobbyContainer.onGameStart(onGameStart, this);
       lobbyContainer.startListening();
@@ -69,9 +72,13 @@ function handleJoinGame(response) {
   }
 }
 
+/**
+ * @param {*} socket
+ * @param {LobbyContainer} lobbyContainer
+ */
 function onGameStart(socket, lobbyContainer) {
-    lobbyContainer.destroy();
-    const miniGame = new MiniGames.TugOfWar(document.body, socket);
-    miniGame.startListening();
-    miniGame.start();
+  lobbyContainer.destroy();
+  const miniGame = new MiniGames.TugOfWar(document.body, socket);
+  miniGame.startListening();
+  miniGame.start();
 }

@@ -5,26 +5,30 @@ class LobbyContainer extends SocketContainer {
 
   /**
    * @param {Element} parent
-   * @param socket
+   * @param {*} socket
    */
   constructor(parent, socket) {
     super(parent, socket);
     this._playerId = socket.id;
     this._updatePlayers = this._updatePlayers.bind(this);
 
-    this._playersEl = document.createElement('div');
-    this._startBtnContainer = document.createElement('div');
+    this._playersEl = document.createElement("div");
+    this._startBtnContainer = document.createElement("div");
 
     this._container.append(this._playersEl, this._startBtnContainer);
   }
 
+  /**
+   *
+   */
   startListening() {
-    this._socket.on('players changed', this._updatePlayers);
-    this._socket.on('game start', this._onGameStart.bind(this._onGameStartContext, this._socket, this));
+    this._socket.on("players changed", this._updatePlayers);
+    this._socket.on("game start", this._onGameStart.bind(this._onGameStartContext, this._socket, this));
   }
 
   /**
    * @param {Function} cb
+   * @param {*} context
    */
   onGameStart(cb, context) {
     this._onGameStart = cb;
@@ -35,7 +39,7 @@ class LobbyContainer extends SocketContainer {
    *
    */
   _startGame() {
-    this._socket.emit('start game');
+    this._socket.emit("start game");
   }
 
   /**
@@ -44,22 +48,25 @@ class LobbyContainer extends SocketContainer {
    * @param {string[]} players
    */
   _updatePlayers(leader, players) {
-    this._playersEl.innerHTML = '';
+    this._playersEl.innerHTML = "";
     players.forEach((player) => {
-      let el = document.createElement('div');
+      let el = document.createElement("div");
       el.innerHTML = leader === player ? `${player} *` : player;
       this._playersEl.append(el);
     });
 
     if (leader === this._playerId) {
       if (!this._startBtn) {
-        this._startBtn = new Button('START GAME').onClick(this._startGame, this);
+        this._startBtn = new Button("START GAME").onClick(this._startGame, this);
         this._startBtnContainer.append(this._startBtn.element());
       }
-      this._startBtn.enable(players.length > 1)
+      this._startBtn.enable(players.length > 1);
     }
   }
 
+  /**
+   * @override
+   */
   destroy() {
     if (this._startBtn) {
       this._startBtn.destroy();

@@ -16,7 +16,7 @@ export function describeDOM(name, cb) {
 
     afterEach(function() {
       document.body.removeChild(this.testContainer);
-      assert.lengthOf(document.querySelectorAll("body div"), 0, "Elements detected in document body. Check for a DOM leak?");
+      assert.lengthOf(document.querySelectorAll("body div"), 0, "Elements detected in document body. Possible DOM leak.");
     });
 
     cb();
