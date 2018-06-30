@@ -2,9 +2,10 @@ import "promise-polyfill/src/polyfill";
 import io from "socket.io-client";
 import { extract } from "../../src/util/query-param";
 import { onDOMReady } from "../../src/util/dom-ready";
-import LobbyContainer from "./lobby-container";
 import PopUp from "../../src/ui/components/pop-up";
-import * as MiniGames from "../../mini-games/index";
+import LobbyModel from "./module/lobby-model";
+import LobbyController from "./module/lobby-controller";
+import LobbyRenderer from "./module/lobby-renderer";
 
 const gameId = extract("id", window.location.search);
 const username = window.localStorage.getItem("username");
@@ -51,36 +52,40 @@ function joinGame(id) {
 function handleJoinGame(response) {
 
   if (response.type === "ERROR") {
-    new PopUp({
-      message: response.message,
-      actions: [
-        {
-          name: "BACK",
-          handler: () => window.location = `${window.location.origin}`,
-          context: null
-        }
-      ]
-    });
-  } else {
-    const { id } = response;
-    const usernameQueryParam = username ? `?username=${username}` : "";
-    const socket = io(`${window.location.hostname}:3000/${id}${usernameQueryParam}`);
-
-    socket.on("connect", () => {
-      const lobbyContainer = new LobbyContainer(document.body, socket);
-      lobbyContainer.onGameStart(onGameStart, this);
-      lobbyContainer.startListening();
-    });
+    throw new Error(response.message);
   }
+
+  const { id } = response;
+  const usernameQueryParam = username ? `?username=${username}` : "";
+  const socket = io(`${window.location.hostname}:3000/${id}${usernameQueryParam}`);
+
+  socket.on("connect", () => {
+
+    const lobby = createLobby(document.body, socket);
+
+    socket.on("game start", () => {
+      lobby.destroy();
+      window.console.log("mini game time");
+    });
+  });
 }
 
 /**
+ * @param {Element} parent
  * @param {*} socket
- * @param {LobbyContainer} lobbyContainer
+ * @returns {Object}
  */
-function onGameStart(socket, lobbyContainer) {
-  lobbyContainer.destroy();
-  const miniGame = new MiniGames.TugOfWar(document.body, socket);
-  miniGame.startListening();
-  miniGame.start();
+function createLobby(parent, socket) {
+
+  let lobbyModel = new LobbyModel();
+  let lobbyController = new LobbyController(lobbyModel, socket);
+  let lobbyRenderer = new LobbyRenderer(parent, lobbyModel, lobbyController);
+
+  createLobby.destroy = () => {
+    lobbyRenderer.destroy();
+    lobbyController.destroy();
+    lobbyModel.destroy();
+  };
+
+  return createLobby;
 }
