@@ -22,6 +22,12 @@ class Model extends EventEmitter {
       enumerable: true,
       configurable: true,
       /**
+       * @returns {*}
+       */
+      get() {
+        return this[`_${propertyName}`];
+      },
+      /**
        * @param {*} value
        */
       set(value) {

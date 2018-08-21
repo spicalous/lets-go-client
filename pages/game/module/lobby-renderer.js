@@ -28,6 +28,14 @@ class LobbyRenderer extends Renderer {
    * @param {string} [players[].username]
    */
   _updatePlayers(players) {
+    this._updatePlayersContainer(players);
+    this._updateActionsContainer(players);
+  }
+
+  /**
+   * @param {Object[]} players
+   */
+  _updatePlayersContainer(players) {
     this._playersContainer.innerHTML = "";
 
     players.forEach((player) => {
@@ -38,13 +46,62 @@ class LobbyRenderer extends Renderer {
 
       this._playersContainer.append(el);
     });
+  }
 
+  /**
+   * @param {Object[]} players
+   */
+  _updateActionsContainer(players) {
     if (this._model.isLeader) {
-      if (!this._startBtn) {
-        this._startBtn = new Button("START GAME").onClick(this._controller.startGame, this._controller);
-        this._actionContainer.append(this._startBtn.element());
-      }
+      this._removeWaitingInfo();
+      this._displayStartBtn();
+      this._startBtn.onClick(this._controller.startGame, this._controller);
       this._startBtn.enable(players.length > 1);
+    } else {
+      this._removeStartBtn();
+      this._displayLobbyInfo();
+    }
+  }
+
+  /**
+   *
+   */
+  _displayLobbyInfo() {
+    if (!this._lobbyInfo) {
+      this._lobbyInfo = document.createElement("div");
+      this._lobbyInfo.className = "lobby-info";
+      this._lobbyInfo.innerHTML = "Waiting for leader to start game...";
+      this._actionContainer.append(this._lobbyInfo);
+    }
+  }
+
+  /**
+   *
+   */
+  _removeWaitingInfo() {
+    if (this._lobbyInfo) {
+      this._actionContainer.removeChild(this._lobbyInfo);
+      this._lobbyInfo = null;
+    }
+  }
+
+  /**
+   *
+   */
+  _displayStartBtn() {
+    if (!this._startBtn) {
+      this._startBtn = new Button("START GAME");
+      this._actionContainer.append(this._startBtn.element());
+    }
+  }
+
+  /**
+   *
+   */
+  _removeStartBtn() {
+    if (this._startBtn) {
+      this._startBtn.destroy();
+      this._startBtn = null;
     }
   }
 
@@ -52,12 +109,9 @@ class LobbyRenderer extends Renderer {
    * @override
    */
   destroy() {
-
-    if (this._startBtn) {
-      this._startBtn.destroy();
-    }
-
     this._model.off(this._updatePlayers, this);
+    this._removeStartBtn();
+    this._removeWaitingInfo();
     super.destroy();
   }
 

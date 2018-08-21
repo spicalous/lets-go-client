@@ -20,7 +20,6 @@ class Button {
   }
 
   /**
-   *
    * @param {Function} handler
    * @param {*} [context]
    * @returns {Button}
@@ -32,7 +31,6 @@ class Button {
   }
 
   /**
-   *
    * @param {boolean} enable
    * @returns {Button}
    */

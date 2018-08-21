@@ -23,6 +23,13 @@ describe("module/model", function() {
     sassert.notCalled(bHandler);
   });
 
+  it("returns the same value", function() {
+    let value = {};
+    model.a = value;
+
+    assert.strictEqual(model.a, value);
+  });
+
   it("unsubscribing does not call handler", function() {
     model.off("a");
 
