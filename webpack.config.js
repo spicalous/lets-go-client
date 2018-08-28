@@ -1,9 +1,10 @@
 const path = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+  mode: "production",
   entry: {
     "index": ["whatwg-fetch", "./pages/index/index.js", "./pages/index/index.scss"],
     "game/game": ["whatwg-fetch", "./pages/game/game.js", "./pages/game/game.scss"]
@@ -14,7 +15,10 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(["dist"]),
-    new ExtractTextPlugin("[name].css"),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
     new HtmlWebpackPlugin({
       filename: "index.html",
       title: "Lets Go",
@@ -40,16 +44,11 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: "css-loader"
-            },
-            {
-              loader: "sass-loader"
-            }
-          ]
-        })
+        use: [
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            "sass-loader"
+        ]
       }
     ]
   }
