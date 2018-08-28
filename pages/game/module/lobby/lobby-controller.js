@@ -1,4 +1,4 @@
-import Controller from "../../../src/module/controller";
+import Controller from "../../../../src/module/controller";
 
 class LobbyController extends Controller {
 

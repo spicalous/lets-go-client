@@ -1,5 +1,3 @@
-const webpackConfig = require("./webpack.config.js");
-
 module.exports = function(config) {
   config.set({
     singleRun: true,
@@ -10,7 +8,9 @@ module.exports = function(config) {
     preprocessors: {
       "test/unit/**/*-test.js": ["webpack"]
     },
-    port: 9876,
+    webpack: {
+      mode: "none"
+    },
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,

@@ -3,9 +3,9 @@ import io from "socket.io-client";
 import { extract } from "../../src/util/query-param";
 import { onDOMReady } from "../../src/util/dom-ready";
 import PopUp from "../../src/ui/components/pop-up";
-import LobbyModel from "./module/lobby-model";
-import LobbyController from "./module/lobby-controller";
-import LobbyRenderer from "./module/lobby-renderer";
+import LobbyModel from "./module/lobby/lobby-model";
+import LobbyController from "./module/lobby/lobby-controller";
+import LobbyRenderer from "./module/lobby/lobby-renderer";
 
 const gameId = extract("id", window.location.search);
 const username = window.localStorage.getItem("username");

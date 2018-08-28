@@ -1,5 +1,5 @@
-import Button from "../../../src/ui/components/button";
-import Renderer from "../../../src/module/renderer";
+import Button from "../../../../src/ui/components/button";
+import Renderer from "../../../../src/module/renderer";
 
 class LobbyRenderer extends Renderer {
 

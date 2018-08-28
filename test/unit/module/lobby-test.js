@@ -1,8 +1,8 @@
 import { stub } from "sinon";
 import { describeDOM } from "../../helper/describe-test-helper";
-import Controller from "../../../pages/game/module/lobby-controller";
-import Model from "../../../pages/game/module/lobby-model";
-import Renderer from "../../../pages/game/module/lobby-renderer";
+import Controller from "../../../pages/game/module/lobby/lobby-controller";
+import Model from "../../../pages/game/module/lobby/lobby-model";
+import Renderer from "../../../pages/game/module/lobby/lobby-renderer";
 
 describeDOM("module/lobby", function() {
 
