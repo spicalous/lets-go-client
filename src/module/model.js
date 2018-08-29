@@ -3,14 +3,16 @@ import EventEmitter from "eventemitter3";
 class Model extends EventEmitter {
 
   /**
-   * @param {string[]} props
+   * @param {string[]} [props]
    */
   constructor(props) {
     super();
     let i;
 
-    for (i = 0; i < props.length; i++) {
-      this._defineObservableSetter(props[i]);
+    if (props) {
+      for (i = 0; i < props.length; i++) {
+        this._defineObservableSetter(props[i]);
+      }
     }
   }
 

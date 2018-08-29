@@ -15,6 +15,12 @@ describe("module/model", function() {
     model.on("b", bHandler);
   });
 
+  it("can be instantiated without any props", function() {
+    assert.doesNotThrow(function() {
+      new Model();
+    });
+  });
+
   it("fires events when the property has been set", function() {
     model.a = "test";
 
