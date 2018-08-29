@@ -55,7 +55,6 @@ class LobbyRenderer extends Renderer {
     if (this._model.isLeader) {
       this._removeWaitingInfo();
       this._displayStartBtn();
-      this._startBtn.onClick(this._controller.startGame, this._controller);
       this._startBtn.enable(players.length > 1);
     } else {
       this._removeStartBtn();
@@ -91,6 +90,7 @@ class LobbyRenderer extends Renderer {
   _displayStartBtn() {
     if (!this._startBtn) {
       this._startBtn = new Button("START GAME");
+      this._startBtn.onClick(this._controller.startGame, this._controller);
       this._actionContainer.append(this._startBtn.element());
     }
   }

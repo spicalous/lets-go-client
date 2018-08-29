@@ -3,14 +3,19 @@ import io from "socket.io-client";
 import { extract } from "../../src/util/query-param";
 import { onDOMReady } from "../../src/util/dom-ready";
 import PopUp from "../../src/ui/components/pop-up";
+import ModuleFactory from "../../src/module/factory";
+import EngineModel from "./module/engine/engine-model";
+import EngineController from "./module/engine/engine-controller";
+import EngineRenderer from "./module/engine/engine-renderer";
 import LobbyModel from "./module/lobby/lobby-model";
 import LobbyController from "./module/lobby/lobby-controller";
 import LobbyRenderer from "./module/lobby/lobby-renderer";
-import ModuleFactory from "../../src/module/factory";
 
 const gameId = extract("id", window.location.search);
 const username = window.localStorage.getItem("username");
+
 const lobbyFactory = new ModuleFactory(LobbyModel, LobbyController, LobbyRenderer);
+const engineFactory = new ModuleFactory(EngineModel, EngineController, EngineRenderer);
 
 onDOMReady(() => {
 
@@ -67,7 +72,20 @@ function handleJoinGame(response) {
 
     socket.on("game start", () => {
       lobby.destroy();
-      window.console.log("mini game time");
+      engineFactory.build(document.body, socket);
+
+      fetch("api/games/ready", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          id,
+          playerId: socket.id
+        })
+      });
+    });
+
+    socket.on("mini game start", () => {
+      window.console.log("mini game start");
     });
   });
 }
