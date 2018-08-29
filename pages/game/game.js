@@ -6,9 +6,11 @@ import PopUp from "../../src/ui/components/pop-up";
 import LobbyModel from "./module/lobby/lobby-model";
 import LobbyController from "./module/lobby/lobby-controller";
 import LobbyRenderer from "./module/lobby/lobby-renderer";
+import ModuleFactory from "../../src/module/factory";
 
 const gameId = extract("id", window.location.search);
 const username = window.localStorage.getItem("username");
+const lobbyFactory = new ModuleFactory(LobbyModel, LobbyController, LobbyRenderer);
 
 onDOMReady(() => {
 
@@ -61,31 +63,11 @@ function handleJoinGame(response) {
 
   socket.on("connect", () => {
 
-    const lobby = createLobby(document.body, socket);
+    const lobby = lobbyFactory.build(document.body, socket);
 
     socket.on("game start", () => {
       lobby.destroy();
       window.console.log("mini game time");
     });
   });
-}
-
-/**
- * @param {Element} parent
- * @param {*} socket
- * @returns {Object}
- */
-function createLobby(parent, socket) {
-
-  let lobbyModel = new LobbyModel();
-  let lobbyController = new LobbyController(lobbyModel, socket);
-  let lobbyRenderer = new LobbyRenderer(parent, lobbyModel, lobbyController);
-
-  createLobby.destroy = () => {
-    lobbyRenderer.destroy();
-    lobbyController.destroy();
-    lobbyModel.destroy();
-  };
-
-  return createLobby;
 }
